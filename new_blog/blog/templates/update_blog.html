@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-info">
+                    {{ message }}
+                </div>
+
+                {% endfor %}
+            {% endif %}
+
+                <div class="mb-3">
+                    <label  for="exampleInputEmail1" class="form-label">Select Category</label>
+                    <select class="form-control" name="category">
+                        <option>Choose</option>
+                        {% for category in category %}
+
+                            <option value="{{category.id}}" {% if blog_obj.category == category %} selected {% endif %}>{{category.category_name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+              <div class="mb-3">
+                <label class="form-label">Enter Title</label>
+                <input type="text" name="title" class="form-control" value="{{blog_obj.title}}" id="" aria-describedby="emailHelp1">
+              </div>
+            <div class="mb-3">
+                <label class="form-label" for="exampleInputEmail1">Upload Image</label>
+                <input type="file" name="banner_image" class="form-input" id="exampleInputEmail1">
+
+              </div>
+
+              <div class="mb-3">
+                  {{form.media}}
+                  {{form.as_p}}
+              </div>
+
+<!--            <div class="mb-3">-->
+<!--                <label for="exampleInputEmail1" class="form-label">Select cate</label>-->
+<!--                <input type="text" name="category" class="form-control"  aria-describedby="emailHelp1">-->
+
+<!--            </div>-->
+
+              <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+    </div>
+</div>
+
+{% endblock %}
